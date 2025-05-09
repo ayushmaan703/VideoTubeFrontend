@@ -75,7 +75,7 @@ export const changePassword = createAsyncThunk(
 );
 export const currentUserInfo = createAsyncThunk("currentUserInfo", async () => {
   try {
-    const response = await axiosInstance.post("/user/current-user", {
+    const response = await axiosInstance.post("/user/current-user",{}, {
       withCredentials: true,
     });
     return response.data.data;
