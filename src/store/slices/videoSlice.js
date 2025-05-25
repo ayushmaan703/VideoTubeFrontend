@@ -9,6 +9,7 @@ const initialState = {
   videos: {
     docs: [],
     hasNextPage: false,
+    nextCursor: null,
   },
   video: null,
   publishToggled: false,

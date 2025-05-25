@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NoVideosFound from "../components/NoVideoFound";
 import VideoList from "../components/VideoList";
@@ -7,18 +7,28 @@ import { getAllVideos, makeVideosNull } from "../store/slices/videoSlice";
 import { FaFilter } from "react-icons/fa";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useParams, useSearchParams } from "react-router-dom";
+import InfiniteScroll from "../components/InfiniteScroll";
 
 function SearchVideos() {
   const loading = useSelector((state) => state.video?.loading);
-  const videos = useSelector((state) => state.video?.videos);
+  const videosFromStore = useSelector((state) => state.video?.videos?.docs || []);
   const dispatch = useDispatch();
   const { query } = useParams();
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchParams, setSearchParms] = useSearchParams();
+  const nextCursorFromStore = useSelector((state) => state.video?.videos?.nextCursor);
+  const [videos, setVideos] = useState([]);
+  const [nextCursor, setNextCursor] = useState(null);
+  const hasNextPage = useSelector((state) => state.video?.videos?.hasNextPage);
+
 
   useEffect(() => {
     const sortType = searchParams.get("sortType");
     const sortBy = searchParams.get("sortBy");
+
+    setVideos([]);
+    setNextCursor(null);
+
     dispatch(
       getAllVideos({
         query,
@@ -26,19 +36,54 @@ function SearchVideos() {
         sortType,
       })
     );
+
     setFilterOpen(false);
+
     return () => dispatch(makeVideosNull());
   }, [dispatch, query, searchParams]);
+
+
+  useEffect(() => {
+    if (videosFromStore.length > 0) {
+      setVideos((prevVideos) => {
+        const existingIds = new Set(prevVideos.map(v => v._id));
+        const newVideos = videosFromStore.filter(v => !existingIds.has(v._id));
+        return [...prevVideos, ...newVideos];
+      });
+    }
+  }, [videosFromStore]);
+
+
+  useEffect(() => {
+    setNextCursor(nextCursorFromStore || null);
+  }, [nextCursorFromStore]);
+
+
+  const fetchMoreVideos = useCallback(() => {
+    if (hasNextPage && !loading) {
+      const sortType = searchParams.get("sortType");
+      const sortBy = searchParams.get("sortBy");
+
+      dispatch(
+        getAllVideos({
+          query,
+          sortBy,
+          sortType,
+          lastCreatedAt: nextCursor,
+        })
+      );
+    }
+  }, [hasNextPage, nextCursor, dispatch, loading, searchParams, query]);
 
   const handleSortParams = (newSortBy, newSortType = "asc") => {
     setSearchParms({ sortBy: newSortBy, sortType: newSortType });
   };
 
-  if (videos?.totalDocs === 0) {
+  if (videosFromStore?.totalDocs === 0) {
     return <NoVideosFound text={"Try searching something else"} />;
   }
 
-  if (loading) {
+  if (loading && videos.length === 0) {
     return <HomeSkeleton />;
   }
 
@@ -62,50 +107,66 @@ function SearchVideos() {
                 onClick={() => setFilterOpen((prev) => !prev)}
               />
               <table className="mt-4">
-                <tr className="w-full text-start border-b">
-                  <th>SortBy</th>
-                </tr>
-                <tr className="flex flex-col gap-2 text-slate-400 cursor-pointer">
-                  <td onClick={() => handleSortParams("createdAt", "desc")}>
-                    Upload date <span className="text-xs">(Latest)</span>
-                  </td>
-                  <td onClick={() => handleSortParams("createdAt", "asc")}>
-                    Upload date <span className="text-xs">(Oldest)</span>
-                  </td>
-                  <td onClick={() => handleSortParams("views", "asc")}>
-                    View count <span className="text-xs">(Low to High)</span>
-                  </td>
-                  <td onClick={() => handleSortParams("views", "desc")}>
-                    View count <span className="text-xs">(High to Low)</span>
-                  </td>
-                  <td onClick={() => handleSortParams("duration", "asc")}>
-                    Duration <span className="text-xs">(Low to High)</span>
-                  </td>
-                  <td onClick={() => handleSortParams("duration", "desc")}>
-                    Duration <span className="text-xs">(High to Low)</span>
-                  </td>
-                </tr>
+                <thead className="w-full text-start border-b">
+                  <tr>
+                    <th>SortBy</th>
+                  </tr>
+                </thead>
+                <tbody className="flex flex-col gap-2 text-slate-400 cursor-pointer">
+                  <tr onClick={() => handleSortParams("createdAt", "desc")}>
+                    <td>
+                      Upload date <span className="text-xs">(Latest)</span>
+                    </td>
+                  </tr>
+                  <tr onClick={() => handleSortParams("createdAt", "asc")}>
+                    <td>
+                      Upload date <span className="text-xs">(Oldest)</span>
+                    </td>
+                  </tr>
+                  <tr onClick={() => handleSortParams("views", "asc")}>
+                    <td>
+                      View count <span className="text-xs">(Low to High)</span>
+                    </td>
+                  </tr>
+                  <tr onClick={() => handleSortParams("views", "desc")}>
+                    <td>
+                      View count <span className="text-xs">(High to Low)</span>
+                    </td>
+                  </tr>
+                  <tr onClick={() => handleSortParams("duration", "asc")}>
+                    <td>
+                      Duration <span className="text-xs">(Low to High)</span>
+                    </td>
+                  </tr>
+                  <tr onClick={() => handleSortParams("duration", "desc")}>
+                    <td>
+                      Duration <span className="text-xs">(High to Low)</span>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
         )}
-        <div className="grid max-h-screen xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 text-white overflow-y">
-          {videos &&
-            videos?.docs?.map((video) => (
+        <InfiniteScroll fetchMore={fetchMoreVideos} hasNextPage={hasNextPage}>
+          <div className="text-white mb-20 sm:m-0 max-h-screen w-full grid xl:grid-cols-3 sm:grid-cols-2 grid-cols-1 overflow-y">
+            {videos?.map((video) => (
               <VideoList
-                key={video?._id}
-                thumbnail={video?.thumbnail?.url}
-                duration={video?.duration}
-                title={video?.title}
-                views={video?.views}
-                avatar={video?.ownerDetails?.avatar}
-                channelName={video?.ownerDetails?.userName}
-                createdAt={video?.createdAt}
-                videoId={video?._id}
+                key={video._id}
+                avatar={video.ownerDetails?.avatar}
+                duration={video.duration}
+                title={video.title}
+                thumbnail={video.thumbnail?.url}
+                createdAt={video.createdAt}
+                views={video.views}
+                channelName={video.ownerDetails.userName}
+                videoId={video._id}
                 isPublished={video.isPublished}
-              ></VideoList>
+              />
             ))}
-        </div>
+          </div>
+          {loading && <HomeSkeleton />}
+        </InfiniteScroll>
       </div>
     </>
   );
