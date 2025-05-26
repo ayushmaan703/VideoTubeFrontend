@@ -155,7 +155,7 @@ function Navbar() {
           //   </div>
           // </div>
           <div
-            className="fixed right-0 top-0 text-white flex flex-col border-l h-screen w-5/6 bg-[#0F0F0F] sm:hidden rounded-lg outline-none 
+            className="fixed right-0 top-0 text-white flex flex-col border-l h-full w-5/6 bg-[#0F0F0F] sm:hidden rounded-lg outline-none 
               overflow-y-auto z-50" 
           >
             <div className="w-full border-b h-20 flex items-center mb-2 justify-between px-3">
