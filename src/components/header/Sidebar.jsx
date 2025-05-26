@@ -25,48 +25,48 @@ function Sidebar() {
     <>
       <div className="text-white sm:block hidden sm:w-44 w-16 sm:p-3 p-2 border-[#0E0F0F] border-r xl:space-y-60 space-y-32 h-[93vh]">
         <div className="space-y-4 sm:pt-4 pt-1">
-          <div className="flex items-center gap-2 justify-center sm:justify-start hover:bg-[#222222] cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
-            <RiHome6Line size={25} />
-            <NavLink to="/">
+          <NavLink to="/" className="flex items-center gap-2 justify-center sm:justify-start hover:bg-[#222222] cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
+            <div className="flex items-center gap-2">
+              <RiHome6Line size={25} />
               <span className="text-base hidden sm:block ">Home</span>
-            </NavLink>
-          </div>
-          <div className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F]  rounded-lg">
-            <BiLike size={25} />
-            <NavLink to="/liked-videos">
+            </div>
+          </NavLink>
+          <NavLink to="/liked-videos" className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
+            <div className="flex items-center gap-2">
+              <BiLike size={25} />
               <span className="text-base hidden sm:block">Liked Videos</span>
-            </NavLink>
-          </div>
-          <div className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F]  rounded-lg">
-            <FaThreads size={25} />
-            <NavLink to="/tweets">
+            </div>
+          </NavLink>
+          <NavLink to="/tweets" className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F]  rounded-lg">
+            <div className="flex items-center gap-2">
+              <FaThreads size={25} />
               <span className="text-base hidden sm:block">Tweets</span>
-            </NavLink>
-          </div>
-          <div className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
-            <BiHistory size={25} />
-            <NavLink to="/history">
+            </div>
+          </NavLink>
+          <NavLink to="/history" className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
+            <div className="flex items-center gap-2">
+              <BiHistory size={25} />
               <span className="text-base hidden sm:block">History</span>
-            </NavLink>
-          </div>
-          <div className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
-            <HiOutlineVideoCamera size={25} />
-            <NavLink to={`/channel/${username}`}>
+            </div>
+          </NavLink>
+          <NavLink to={`/channel/${username}`} className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
+            <div className="flex items-center gap-2">
+              <HiOutlineVideoCamera size={25} />
               <span className="text-base hidden sm:block">My Content</span>
-            </NavLink>
-          </div>
-          <div className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
-            <IoFolderOutline size={25} />
-            <NavLink to="/collections">
+            </div>
+          </NavLink>
+          <NavLink to="/collections" className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
+            <div className="flex items-center gap-2">
+              <IoFolderOutline size={25} />
               <span className="text-base hidden sm:block">Collections</span>
-            </NavLink>
-          </div>
-          <div className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
-            <TbUserCheck size={25} />
-            <NavLink to="/subscriptions">
+            </div>
+          </NavLink>
+          <NavLink to="/subscriptions" className="flex items-center justify-center sm:justify-start gap-2 hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg">
+            <div className="flex items-center gap-2">
+              <TbUserCheck size={25} />
               <span className="text-base hidden sm:block">Subscriptions</span>
-            </NavLink>
-          </div>
+            </div>
+          </NavLink>
         </div>
 
         <div className="space-y-4">

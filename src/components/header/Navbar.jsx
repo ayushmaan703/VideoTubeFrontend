@@ -88,75 +88,9 @@ function Navbar() {
 
         {/* Side panel for smaller screens */}
         {toggleMenu && (
-          // <div className="overflow-y-auto fixed right-0 top-0 text-white flex flex-col border-l h-screen w-5/6 bg-[#0F0F0F] sm:hidden rounded-lg outline-none">
-          //   <div className="w-full border-b h-20 flex items-center mb-2 justify-between px-3">
-          //     <div className="flex items-center gap-2">
-          //       <IoLogoYoutube size={35} color="cyan" />
-          //       <span className="text-lg font-bold">YOUTUBE</span>
-          //     </div>
-          //     <IoCloseCircleOutline
-          //       size={35}
-          //       onClick={() => setToggleMenu((prev) => !prev)}
-          //     />
-          //   </div>
-
-          //   <div className="flex flex-col justify-between h-full py-5 px-3">
-          //     <div className=" space-y-5">
-          //       <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-          //         <BiLike size={25} />
-          //         <NavLink to="/liked-videos">
-          //           <span className="text-lg">Liked Videos</span>
-          //         </NavLink>
-          //       </div>
-          //       <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-          //         <HiOutlineVideoCamera size={25} />
-          //         <NavLink to={`/channel/${username}`}>
-          //           <span className="text-lg">My Content</span>
-          //         </NavLink>
-          //       </div>
-          //       <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-          //         <FaThreads size={25} />
-          //         <NavLink to="/tweets">
-          //           <span className="text-lg">Tweets</span>
-          //         </NavLink>
-          //       </div>
-          //       {/* <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-          //         <MdOutlineContactSupport size={25} />
-          //         <span className="text-lg">Support</span>
-          //       </div>
-          //       <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-          //         <CiSettings size={25} />
-          //         <span className="text-lg">Settings</span>
-          //       </div> */}
-          //     </div>
-
-          //     {!authStatus ? (
-          //       <div className="flex flex-col space-y-5 mb-3">
-          //         <NavLink to="/login">
-          //           <Button className="bg-[#222222] border hover:bg-white hover:text-black border-slate-500 py-1 px-3">
-          //             Login
-          //           </Button>
-          //         </NavLink>
-          //         <NavLink to="/signup">
-          //           <Button className="font-semibold border border-slate-500 hover:bg-white hover:text-black py-1 px-3">
-          //             Sign up
-          //           </Button>
-          //         </NavLink>
-          //       </div>
-          //     ) : (
-          //       <div
-          //         onClick={() => logout()}
-          //         className="flex items-center gap-2 justify-center sm:justify-start hover:bg-[#222222]  cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg"
-          //       >
-          //         <IoMdLogOut size={25} />
-          //         <span className="text-base hidden sm:block">Logout</span>
-          //       </div>
-          //     )}
-          //   </div>
-          // </div>
           <div
             className="fixed right-0 top-0 text-white flex flex-col border-l h-full w-5/6 bg-[#0F0F0F] sm:hidden rounded-lg outline-none 
-              overflow-y-auto z-50" 
+              overflow-y-auto z-50"
           >
             <div className="w-full border-b h-20 flex items-center mb-2 justify-between px-3">
               <div className="flex items-center gap-2">
@@ -169,30 +103,30 @@ function Navbar() {
               />
             </div>
 
-            <div className="flex flex-col justify-between flex-grow py-5 px-3"> {/* ✅ Changed h-full to flex-grow */}
+            <div className="flex flex-col justify-between flex-grow py-5 px-3">
               <div className="space-y-5">
-                <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-                  <BiLike size={25} />
-                  <NavLink to="/liked-videos">
+                <NavLink to="/liked-videos" className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
+                  <div className="flex items-center gap-5">
+                    <BiLike size={25} />
                     <span className="text-lg">Liked Videos</span>
-                  </NavLink>
-                </div>
-                <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-                  <HiOutlineVideoCamera size={25} />
-                  <NavLink to={`/channel/${username}`}>
+                  </div>
+                </NavLink>
+                <NavLink to={`/channel/${username}`} className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
+                  <div className="flex items-center gap-5">
+                    <HiOutlineVideoCamera size={25} />
                     <span className="text-lg">My Content</span>
-                  </NavLink>
-                </div>
-                <div className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
-                  <FaThreads size={25} />
-                  <NavLink to="/tweets">
+                  </div>
+                </NavLink>
+                <NavLink to="/tweets" className="flex items-center border border-slate-500 gap-5 px-3 py-1 hover:bg-[#222222] rounded-lg">
+                  <div className="flex items-center gap-5">
+                    <FaThreads size={25} />
                     <span className="text-lg">Tweets</span>
-                  </NavLink>
-                </div>
+                  </div>
+                </NavLink>
               </div>
 
               {!authStatus ? (
-                <div className="flex flex-col space-y-5 mb-3 mt-10"> {/* ✅ Added mt-10 for spacing if needed */}
+                <div className="flex flex-col space-y-5 mb-3 mt-10">
                   <NavLink to="/login">
                     <Button className="bg-[#222222] border hover:bg-white hover:text-black border-slate-500 py-1 px-3">
                       Login
@@ -207,7 +141,7 @@ function Navbar() {
               ) : (
                 <div
                   onClick={() => logout()}
-                  className="flex items-center gap-2 justify-center sm:justify-start hover:bg-[#222222] cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg mt-10" // ✅ Added mt-10 for spacing
+                  className="flex items-center gap-2 justify-center sm:justify-start hover:bg-[#222222] cursor-pointer py-1 px-2 border border-[#0E0F0F] rounded-lg mt-10" 
                 >
                   <IoMdLogOut size={25} />
                   <span className="text-base hidden sm:block">Logout</span>
