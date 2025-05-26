@@ -5,16 +5,19 @@ import TweetAndComment from "../../components/TweetAndComment";
 import TweetsList from "../../components/TweetList";
 
 function ChannelTweets() {
+
   const dispatch = useDispatch();
   const authId = useSelector((state) => state.auth?.userData?._id);
   const userId = useSelector((state) => state.user?.profileData?._id);
   const tweets = useSelector((state) => state.tweet?.tweets);
+
   useEffect(() => {
     if (userId) dispatch(getUserTweets(userId));
   }, [dispatch, userId]);
+
   return (
     <>
-      {authId === userId && <TweetAndComment tweet={true} />}
+      {authId === userId && <TweetAndComment tweet={true} userId={userId} />}
       {tweets?.map((tweet) => (
         <TweetsList
           key={tweet?._id}

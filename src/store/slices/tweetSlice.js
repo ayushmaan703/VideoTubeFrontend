@@ -98,9 +98,6 @@ const tweetSlice = createSlice({
       state.loading = false;
       state.tweets = action.payload;
     });
-    builder.addCase(createTweet.fulfilled, (state, action) => {
-      state.tweets.unshift(action.payload);
-    });
     builder.addCase(deleteTweet.fulfilled, (state, action) => {
       state.tweets = state.tweets.filter(
         (tweet) => tweet._id !== action.payload
