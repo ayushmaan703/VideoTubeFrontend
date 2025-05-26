@@ -6,8 +6,6 @@ import { SlMenu } from "react-icons/sl";
 import { CiSearch } from "react-icons/ci";
 import { BiLike } from "react-icons/bi";
 import { HiOutlineVideoCamera } from "react-icons/hi2";
-import { CiSettings } from "react-icons/ci";
-import { MdOutlineContactSupport } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,7 +13,9 @@ import { IoMdLogOut } from "react-icons/io";
 import { userLogout } from "../../store/slices/authSlice";
 import SearchForSmallScreen from "../SearchForSmallScreen";
 import { FaThreads } from "react-icons/fa6";
+
 function Navbar() {
+
   const dispatch = useDispatch();
   const [toggleMenu, setToggleMenu] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -26,6 +26,7 @@ function Navbar() {
     await dispatch(userLogout());
     navigate("/");
   };
+
   return (
     <>
       <nav className="w-full bg-[#0E0F0F] flex justify-between items-center p-4 sm:gap-5 gap-2 border-b-2 border-gray-500 sticky top-0 z-50">
@@ -87,7 +88,7 @@ function Navbar() {
 
         {/* Side panel for smaller screens */}
         {toggleMenu && (
-          <div className="fixed right-0 top-0 text-white flex flex-col border-l h-screen w-5/6 bg-[#0F0F0F] sm:hidden rounded-lg outline-none">
+          <div className="overflow-y-auto fixed right-0 top-0 text-white flex flex-col border-l h-screen w-5/6 bg-[#0F0F0F] sm:hidden rounded-lg outline-none">
             <div className="w-full border-b h-20 flex items-center mb-2 justify-between px-3">
               <div className="flex items-center gap-2">
                 <IoLogoYoutube size={35} color="cyan" />
