@@ -199,19 +199,6 @@ function App() {
           }
         />
       </Routes>
-      <Toaster
-        position="top-right"
-        reverseOrder={true}
-        toastOptions={{
-          error: {
-            style: { borderRadius: "0", color: "red" },
-          },
-          success: {
-            style: { borderRadius: "0", color: "green" },
-          },
-          duration: 2000,
-        }}
-      />
     </>
   );
 }
